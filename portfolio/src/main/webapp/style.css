@@ -2,8 +2,34 @@
   margin-left: auto;
   margin-right: auto;
   width: 650px;
+  background-color: white;
 }
 
 #greeting-container {
   margin-top: 20px;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #434A4E;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  font-weight: bolder;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.active {
+  background-color: #0472b3;
 }
