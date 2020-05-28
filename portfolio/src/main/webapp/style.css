@@ -22,6 +22,22 @@ body{
     padding: 0;
 }
 
+.row{
+    display: block;
+    width:50%;
+}
+.col{
+    display:table-cell;
+    width:50%;
+}
+
+img.connect{
+    height: 120px;
+    width: 120px;
+}
+#in {
+    width: 130px;
+}
 ul {
   list-style-type: none;
   margin: 0;
