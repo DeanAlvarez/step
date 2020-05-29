@@ -6,19 +6,14 @@
         <link rel="stylesheet" href="style.css">
         <script src="script.js"></script>
     </head>
-    <body>
-        <ul class="navBar">
-            <li class="navBar"><a href="index.html">Home</a></li>
-            <li class="navBar"><a href="career.html">Career</a></li>
-            <li class="navBar"><a href="research.html">Research</a></li>
-            <li class="navBar"><a href="fun.html" class="active">Fun</a></li>
+    <body onload="startGame()">
+    <div class="navBar">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="career.html">Career</a></li>
+            <li><a href="research.html">Research</a></li>
+            <li><a href="fun.html" class="active" >Fun</a></li>
         </ul>
-      <div id="content">
-            <div id="funFact">
-                <p>Click here for a random fact about me:</p>
-                <button onclick="addRandomFact()">Click</button>
-                <div id="fact-container"></div>
-            </div>
-        </div>
+        <div id="gameArea"></div>
     </body>
 </html>
