@@ -11,19 +11,48 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+const canvasSize = 480;
+var targetSize = 15;
 
-/**
- * Adds a random greeting to the page.
- */
-function addRandomFact() {
-  const funFacts =
-      ['In 2019 I took over 300 naps', 'My favorite fiction book is Catcher in the Rye', 'My favorite play is Waiting for Godot', 'I took a Yoga PE course during my freshman year of college',
-      'I am a big fan of Stoic Philosophy','I love classical music, especially that from the romantic era'];
+function startGame() {
+    gameArea.start();
+    clickTarget = new target(targetSize,"red",240,240)
+}
 
-  // Pick a random greeting.
-  const funFact = funFacts[Math.floor(Math.random() * funFacts.length)];
+var gameArea = {
+    canvas : document.createElement("canvas"),
+    start : function() {
+        this.canvas.width = canvasSize;
+        this.canvas.height = canvasSize;
+        this.context = this.canvas.getContext("2d");
+        var canv = this.canvas;
+        document.getElementById("gameArea").appendChild(canv); 
+        this.canvas.addEventListener('click', () => {
+   	    	console.log('canvas click');
+		});
+    },
+    clear : function() {
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  	},
+  	stop : function() {
+    	clearInterval(this.interval);
+  	}
+}
 
-  // Add it to the page.
-  const factContainer = document.getElementById('fact-container');
-  factContainer.innerText = funFact;
+function target(size, color, x, y){
+    this.width = size;
+    this.height = size;   
+    this.x = x;
+    this.y = y;    
+    this.update = function() {
+        ctx = myGameArea.context;
+        ctx.fillStyle = color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+    }
+    this.randomPos = function() {
+        min = 10;
+        max = canvasSize;
+        this.x = Math.floor(Math.random()*(max - min)+min);
+        this.y = Math.floor(Math.random()*(max - min)+min);  
+    }
 }
