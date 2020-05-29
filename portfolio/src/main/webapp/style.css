@@ -17,7 +17,7 @@ body{
     margin:0;
 }
 
-#navBar {
+.navBar {
     margin: 0;
     padding: 0;
 }
@@ -38,7 +38,16 @@ img.connect{
 #in {
     width: 130px;
 }
-ul {
+
+ul.experience{
+    list-style-type: none;
+    
+}
+
+
+
+
+ul.navBar {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -47,11 +56,11 @@ ul {
   background-color: #434A4E;
 }
 
-li {
+li.navBar {
   float: left;
 }
 
-li a {
+li.navBar a {
   display: block;
   font-weight: bolder;
   color: white;
