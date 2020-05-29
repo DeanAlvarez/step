@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="style.css">
         <script src="script.js"></script>
     </head>
-    <body>
+    <body onload="startGame()">
     <div class="navBar">
         <ul>
             <li><a href="index.html">Home</a></li>
@@ -14,13 +14,6 @@
             <li><a href="research.html">Research</a></li>
             <li><a href="fun.html" class="active" >Fun</a></li>
         </ul>
-    </div>
-      <div id="content">
-            <div id="funFact">
-                <p>Click here for a random fact about me:</p>
-                <button onclick="addRandomFact()">Click</button>
-                <div id="fact-container"></div>
-            </div>
-        </div>
+        <div id="gameArea"></div>
     </body>
 </html>
