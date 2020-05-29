@@ -47,7 +47,7 @@ var gameArea = {
     	        y: e.clientY - this.canvas.offsetTop
   	        };
             // get pixel under cursor
-  	        const pixel = ctx.getImageData(pos.x, pos.y, 2, 2).data;
+  	        const pixel = ctx.getImageData(pos.x, pos.y, 3, 3).data;
             if(inTarget(pixel[0])){
                 updateGameArea();
             }
