@@ -5,10 +5,6 @@
   background-color: white;
 }
 
-#greeting-container {
-  margin-top: 20px;
-}
-
 #greatWave {
     max-width: 100%;
 }
@@ -29,11 +25,6 @@ body{
     margin:0;
 }
 
-.navBar {
-    margin: 0;
-    padding: 0;
-}
-
 .row{
     display: block;
     width:50%;
@@ -51,14 +42,14 @@ img.connect{
     width: 130px;
 }
 
-ul.experience{
+ul.page-list{
     list-style-type: none;
     
 }
 
 
 
-
+/* NAVBAR STYLING */
 ul.navBar {
   list-style-type: none;
   margin: 0;
@@ -81,6 +72,11 @@ li.navBar a {
   text-decoration: none;
 }
 
+.navBar {
+    margin: 0;
+    padding: 0;
+}
+/*active is the page that the user is currently on*/
 .active {
   background-color: #0472b3;
 }
