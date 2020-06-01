@@ -11,9 +11,10 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 const canvasSize = 800;
 var targetSize = 10;
-var targets = [];
+var targets = []; //I've setup the targets to have the future possibility of having multiple targets.
 
 //this function starts the game. This is what is called onload by the webpage.
 function startGame() {
@@ -47,7 +48,7 @@ var gameArea = {
     	        y: e.clientY - this.canvas.offsetTop
   	        };
             // get pixel under cursor
-  	        const pixel = ctx.getImageData(pos.x, pos.y, 3, 3).data;
+  	        const pixel = ctx.getImageData(pos.x, pos.y, 4, 4).data;
             if(inTarget(pixel[0])){
                 updateGameArea();
             }
@@ -55,27 +56,26 @@ var gameArea = {
     },
     clear : function() {
     	this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-  	},
-  	stop : function() {
-    	clearInterval(this.interval);
   	}
 }
 
+//This object represents the little target that the player clicks. 
 function target(size, color, x, y){
     this.width = size;
     this.height = size;   
     this.x = x;
-    this.y = y;    
+    this.y = y;
+    //This redraws the square. 
     this.update = function() {
         ctx = gameArea.context;
         ctx.fillStyle = color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
     this.randomPos = function() {
-        min = 20;
+        min = 20; //this is arbitrary, we just want it to be larger than the size of the target so that the target always appears fully on screen. 
         max = canvasSize;
-        this.x = Math.floor(Math.random()*(max - min)+min);
-        this.y = Math.floor(Math.random()*(max - min)+min);  
+        this.x = Math.floor((Math.random()*(max - min))+min);
+        this.y = Math.floor((Math.random()*(max - min))+min);  
     }
     this.currentX = function(){
         return this.x;
