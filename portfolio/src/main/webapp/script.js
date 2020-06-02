@@ -72,7 +72,7 @@ function target(size, color, x, y){
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
     this.randomPos = function() {
-        min = 20; //this is arbitrary, we just want it to be larger than the size of the target so that the target always appears fully on screen. 
+        min = 40; //this is arbitrary, we just want it to be larger than the size of the target so that the target always appears fully on screen. 
         max = canvasSize;
         this.x = Math.floor((Math.random()*(max - min))+min);
         this.y = Math.floor((Math.random()*(max - min))+min);  
