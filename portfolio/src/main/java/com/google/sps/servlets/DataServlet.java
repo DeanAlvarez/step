@@ -53,7 +53,7 @@ public class DataServlet extends HttpServlet {
 
     response.setContentType("text/html;");
     response.getWriter().println("<p>Name: " + name + "</p>");
-    response.getWriter().println("<p>Color: " + password + "</p>");
+    response.getWriter().println("<p>Password: " + password + "</p>");
   }
 
 
