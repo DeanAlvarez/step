@@ -13,6 +13,8 @@
 // limitations under the License.
 
 package com.google.sps.servlets;
+
+import com.google.sps.data.User;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.io.IOException;
@@ -21,47 +23,45 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private ArrayList<String> messages;
+  private ArrayList<User> users;
 
   @Override
   public void init() {
-      messages = new ArrayList<>();
-      messages.add("E=MC^2");
-      messages.add("An apple a day keeps the doctor away");
-      messages.add("Ask not what your contry can do but what you can do for your country");
+      users = new ArrayList<>();
+      User u1 = new User(1,"Dean","test");
+      User u2 = new User(2,"AlsoDean","test123");
+      users.add(u1);
+      users.add(u2);
   }
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("application/json;");
-    String json = convertToJson();
+    String json = convertToJsonUsingGson(users);
     response.getWriter().println(json);
   }
-    /**
-   * Converts a ServerStats instance into a JSON string using manual String concatentation.
-   */
-  private String convertToJson() {
-    String json = "{";
-    json += "\"Oogway\": ";
-    json += "\"" + messages.get(0) + "\"";
-    json += ", ";
-    json += "\"Ghandi\": ";
-    json += "\"" + messages.get(1) + "\"";
-    json += ", ";
-    json += "\"Beyonce\": ";
-    json += "\"" + messages.get(2) + "\"";
-    json += "}";
-    return json;
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String name = request.getParameter("name-input");
+    String password = request.getParameter("password-input");
+
+    response.setContentType("text/html;");
+    response.getWriter().println("<p>Name: " + name + "</p>");
+    response.getWriter().println("<p>Color: " + password + "</p>");
   }
+
+
     /**
    * Converts a ServerStats instance into a JSON string using the Gson library. Note: We first added
    * the Gson library dependency to pom.xml.
    */
-  private String convertToJsonUsingGson(ArrayList<String> list) {
+  private String convertToJsonUsingGson(ArrayList<User> list) {
     Gson gson = new Gson();
     String json = gson.toJson(list);
     return json;
