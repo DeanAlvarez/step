@@ -13,7 +13,8 @@
 // limitations under the License.
 
 package com.google.sps.servlets;
-
+import com.google.gson.Gson;
+import java.util.ArrayList;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,9 +25,45 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
+  private ArrayList<String> messages;
+
+  @Override
+  public void init() {
+      messages = new ArrayList<>();
+      messages.add("E=MC^2");
+      messages.add("An apple a day keeps the doctor away");
+      messages.add("Ask not what your contry can do but what you can do for your country");
+  }
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;");
-    response.getWriter().println("Hello Dean");
+    response.setContentType("application/json;");
+    String json = convertToJson();
+    response.getWriter().println(json);
+  }
+    /**
+   * Converts a ServerStats instance into a JSON string using manual String concatentation.
+   */
+  private String convertToJson() {
+    String json = "{";
+    json += "\"Oogway\": ";
+    json += "\"" + messages.get(0) + "\"";
+    json += ", ";
+    json += "\"Ghandi\": ";
+    json += "\"" + messages.get(1) + "\"";
+    json += ", ";
+    json += "\"Beyonce\": ";
+    json += "\"" + messages.get(2) + "\"";
+    json += "}";
+    return json;
+  }
+    /**
+   * Converts a ServerStats instance into a JSON string using the Gson library. Note: We first added
+   * the Gson library dependency to pom.xml.
+   */
+  private String convertToJsonUsingGson(ArrayList<String> list) {
+    Gson gson = new Gson();
+    String json = gson.toJson(list);
+    return json;
   }
 }
