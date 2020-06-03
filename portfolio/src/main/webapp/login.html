@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Dean Alvarez</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+  </head>
+  <body onload="getServerGreeting()">
+        <ul class="navBar">
+            <li class="navBar"><a href="index.html">Home</a></li>
+            <li class="navBar"><a href="career.html">Career</a></li>
+            <li class="navBar"><a href="research.html">Research</a></li>
+            <li class="navBar"><a href="fun.html">Fun</a></li>
+            <li class="navBar"><a href="login.html" class="active">Login</a></li>
+        </ul>
+    <div id="content">
+    	<h1>Login</h1>
+        <form action="/data" method="POST">
+            <input type="text" name="name-input" placeholder="Your Name"/>
+
+            <br/><br/>
+
+            <input type="text" name="password-input" placeholder="Password"/>
+            <br/><br/>
+
+            <input type="submit"/>
+        </form>
+        <div id="server-data"></div>
+    </div>
+  </body>
+</html>

@@ -14,7 +14,18 @@
 
 
 function getServerGreeting() {
-  fetch('/data').then(response => response.text()).then((greeting) => {
-    document.getElementById('server-data').innerText = greeting;
+  fetch('/data').then(response => response.json()).then((messages) => {
+    const dataElement = document.getElementById('server-data');
+    dataElement.innerText = '';
+    dataElement.appendChild(
+        createListElement(messages.Oogway + ' - Oogway'));
   });
+}
+
+
+/** Creates an <p> element containing text. */
+function createListElement(text) {
+  const liElement = document.createElement('p');
+  liElement.innerText = text;
+  return liElement;
 }
