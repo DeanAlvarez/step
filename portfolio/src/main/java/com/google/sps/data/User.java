@@ -2,11 +2,11 @@ package com.google.sps.data;
 
 public final class User{
 
-    private int ID;
+    private long ID;
     private String username;
     private String passwordHash;
 
-    public User(int ID, String username, String password){
+    public User(long ID, String username, String password){
         this.ID = ID;
         this.username = username;
         this.passwordHash = hash(password);

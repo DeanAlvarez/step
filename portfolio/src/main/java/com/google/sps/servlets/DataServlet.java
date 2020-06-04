@@ -18,9 +18,12 @@ package com.google.sps.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.sps.data.User;
 import com.google.gson.Gson;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,22 +36,36 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private HashMap<String,User> users;
 
   @Override
   public void init() {
-      users = new HashMap<>();
-      User u1 = new User(1,"Dean","test");
-      User u2 = new User(2,"AlsoDean","test123");
-      String key1 = "u1";
-      String key2 = "u2";
-      users.put(key1,u1);
-      users.put(key2,u2);
+        Entity userEntity = new Entity("User");
+        userEntity.setProperty("username", "Jimmy");
+        userEntity.setProperty("password", "test123");
+        userEntity.setProperty("userId",0);
+
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore.put(userEntity);
   }
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("application/json;");
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    Query query = new Query("User");
+    PreparedQuery results = datastore.prepare(query);
+
+    ArrayList<User> users = new ArrayList<>();
+    for (Entity entity : results.asIterable()) {
+      long id = entity.getKey().getId();
+      String username = (String) entity.getProperty("username");
+      String password = (String) entity.getProperty("password");
+
+      User user = new User(id, username, password);
+      users.add(user);
+    }
+
     String json = convertToJsonUsingGson(users);
     response.getWriter().println(json);
   }
@@ -73,7 +90,7 @@ public class DataServlet extends HttpServlet {
    * Converts a ServerStats instance into a JSON string using the Gson library. Note: We first added
    * the Gson library dependency to pom.xml.
    */
-  private String convertToJsonUsingGson(HashMap<String,User> map) {
+  private String convertToJsonUsingGson(ArrayList<User> map) {
     Gson gson = new Gson();
     String json = gson.toJson(map);
     return json;

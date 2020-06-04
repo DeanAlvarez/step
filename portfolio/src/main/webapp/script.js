@@ -17,15 +17,16 @@ function getServerGreeting() {
   fetch('/data').then(response => response.json()).then((users) => {
     const dataElement = document.getElementById('server-data');
     dataElement.innerText = '';
-    dataElement.appendChild(
-        createListElement(users.u1.username));
+    users.forEach((user) => {
+        dataElement.appendChild(createUserElement(user));
+    })
   });
 }
 
 
 /** Creates an <p> element containing text. */
-function createListElement(text) {
-  const liElement = document.createElement('p');
-  liElement.innerText = text;
+function createUserElement(user) {
+  const liElement = document.createElement('li');
+  liElement.innerText = "User: " + user.username + " Password: " + user.password;
   return liElement;
 }
