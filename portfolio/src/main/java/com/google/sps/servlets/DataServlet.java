@@ -14,9 +14,13 @@
 
 package com.google.sps.servlets;
 
+
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
 import com.google.sps.data.User;
 import com.google.gson.Gson;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,19 +28,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private ArrayList<User> users;
+  private HashMap<String,User> users;
 
   @Override
   public void init() {
-      users = new ArrayList<>();
+      users = new HashMap<>();
       User u1 = new User(1,"Dean","test");
       User u2 = new User(2,"AlsoDean","test123");
-      users.add(u1);
-      users.add(u2);
+      String key1 = "u1";
+      String key2 = "u2";
+      users.put(key1,u1);
+      users.put(key2,u2);
   }
 
   @Override
@@ -51,9 +58,14 @@ public class DataServlet extends HttpServlet {
     String name = request.getParameter("name-input");
     String password = request.getParameter("password-input");
 
-    response.setContentType("text/html;");
-    response.getWriter().println("<p>Name: " + name + "</p>");
-    response.getWriter().println("<p>Password: " + password + "</p>");
+    Entity userEntity = new Entity("User");
+    userEntity.setProperty("username", name);
+    userEntity.setProperty("password", password);
+    userEntity.setProperty("userId",0);
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(userEntity);
+    response.sendRedirect("/index.html");
   }
 
 
@@ -61,9 +73,9 @@ public class DataServlet extends HttpServlet {
    * Converts a ServerStats instance into a JSON string using the Gson library. Note: We first added
    * the Gson library dependency to pom.xml.
    */
-  private String convertToJsonUsingGson(ArrayList<User> list) {
+  private String convertToJsonUsingGson(HashMap<String,User> map) {
     Gson gson = new Gson();
-    String json = gson.toJson(list);
+    String json = gson.toJson(map);
     return json;
   }
 }

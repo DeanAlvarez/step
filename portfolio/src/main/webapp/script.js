@@ -14,11 +14,11 @@
 
 
 function getServerGreeting() {
-  fetch('/data').then(response => response.json()).then((messages) => {
+  fetch('/data').then(response => response.json()).then((users) => {
     const dataElement = document.getElementById('server-data');
     dataElement.innerText = '';
     dataElement.appendChild(
-        createListElement(messages.Oogway + ' - Oogway'));
+        createListElement(users.u1.username));
   });
 }
 
