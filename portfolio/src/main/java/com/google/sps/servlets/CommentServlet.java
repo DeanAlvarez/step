@@ -21,7 +21,7 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
-import com.google.sps.data.User;
+import com.google.sps.data.Comment;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.io.IOException;
@@ -33,19 +33,18 @@ import javax.servlet.http.HttpServletResponse;
 
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
-@WebServlet("/data")
-public class DataServlet extends HttpServlet {
+@WebServlet("/comment")
+public class CommentServlet extends HttpServlet {
 
 
   @Override
   public void init() {
-        Entity userEntity = new Entity("User");
-        userEntity.setProperty("username", "Jimmy");
-        userEntity.setProperty("password", "test123");
-        userEntity.setProperty("userId",0);
+        Entity commentEntity = new Entity("Comment");
+        commentEntity.setProperty("username", "JimmyTest");
+        commentEntity.setProperty("comment","Donkey Kong says: Not funny, didn't laugh");
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(userEntity);
+        datastore.put(commentEntity);
   }
 
   @Override
@@ -53,37 +52,34 @@ public class DataServlet extends HttpServlet {
     response.setContentType("application/json;");
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Query query = new Query("User");
+    Query query = new Query("Comment");
     PreparedQuery results = datastore.prepare(query);
 
-    ArrayList<User> users = new ArrayList<>();
+    ArrayList<Comment> comments = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
       long id = entity.getKey().getId();
-      String username = (String) entity.getProperty("username");
-      String password = (String) entity.getProperty("password");
+      String username = new String("Jimmy");
+      String commentText = (String) entity.getProperty("comment");
 
-      User user = new User(id, username, password);
-      users.add(user);
+      Comment comment = new Comment(id, username, commentText);
+      comments.add(comment);
     }
 
-    String json = convertToJsonUsingGson(users);
+    String json = convertToJsonUsingGson(comments);
     response.getWriter().println(json);
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String name = request.getParameter("name-input");
-    String password = request.getParameter("password-input");
+    String name = new String("Tom");
+	String comment= request.getParameter("comment");
 
-    Entity userEntity = new Entity("User");
-    userEntity.setProperty("username", name);
-    userEntity.setProperty("password", password);
-    userEntity.setProperty("userId",0);
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("username", name);
+    commentEntity.setProperty("comment", comment);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(userEntity);
-    // HttpSession session = request.getSession();
-    // session.setAttribute("username", name);
+    datastore.put(commentEntity);
     response.sendRedirect("/comments.html");
   }
 
@@ -92,9 +88,9 @@ public class DataServlet extends HttpServlet {
    * Converts a ServerStats instance into a JSON string using the Gson library. Note: We first added
    * the Gson library dependency to pom.xml.
    */
-  private String convertToJsonUsingGson(ArrayList<?> map) {
+  private String convertToJsonUsingGson(ArrayList<?> list) {
     Gson gson = new Gson();
-    String json = gson.toJson(map);
+    String json = gson.toJson(list);
     return json;
   }
 }

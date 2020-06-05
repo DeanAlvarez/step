@@ -13,19 +13,20 @@
 // limitations under the License.
 
 
-function getServerGreeting() {
-  fetch('/data').then(response => response.json()).then((users) => {
+function getComments() {
+  fetch('/comment').then(response => response.json()).then((comments) => {
     const dataElement = document.getElementById('server-data');
     dataElement.innerText = '';
-    dataElement.appendChild(
-        createListElement(users.u1.username));
+    comments.forEach((comment) => {
+        dataElement.appendChild(createCommentElement(comment));
+    })
   });
 }
 
 
 /** Creates an <p> element containing text. */
-function createListElement(text) {
-  const liElement = document.createElement('p');
-  liElement.innerText = text;
+function createCommentElement(comment) {
+  const liElement = document.createElement('li');
+  liElement.innerText = "User: " + comment.username + " Comment: " + comment.comment;
   return liElement;
 }
