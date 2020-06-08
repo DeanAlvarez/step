@@ -18,15 +18,26 @@ function getComments() {
     const dataElement = document.getElementById('server-data');
     dataElement.innerText = '';
     comments.forEach((comment) => {
-        dataElement.appendChild(createCommentElement(comment));
+        dataElement.appendChild(createUserElement(comment));
+        dataElement.appendChild(createCommentElement(comment))
     })
   });
 }
 
 
-/** Creates an <p> element containing text. */
-function createCommentElement(comment) {
+/** Creates an <li> element containing the users name. */
+function createUserElement(comment) {
   const liElement = document.createElement('li');
-  liElement.innerText = "User: " + comment.username + " Comment: " + comment.comment;
+  liElement.className="comments"
+  const h2Element = document.createElement('h2');
+  h2Element.innerText = comment.username;
+  liElement.appendChild(h2Element);
   return liElement;
+}
+
+/** Creates a <p> element containing the text of the comment */
+function createCommentElement(comment) {
+  const pElement = document.createElement('p');
+  pElement.innerText = comment.comment;
+  return pElement;
 }

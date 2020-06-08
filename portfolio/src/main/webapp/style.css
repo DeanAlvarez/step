@@ -47,6 +47,9 @@ ul.page-list{
     
 }
 
+ul.comments{
+    list-style-type: none;
+}
 
 
 /* NAVBAR STYLING */

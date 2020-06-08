@@ -37,16 +37,16 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/comment")
 public class CommentServlet extends HttpServlet {
 
+// FOR TESTING PURPOSES
+//   @Override
+//   public void init() {
+//         Entity commentEntity = new Entity("Comment");
+//         commentEntity.setProperty("username", "JimmyTest");
+//         commentEntity.setProperty("comment","Donkey Kong says: Not funny, didn't laugh");
 
-  @Override
-  public void init() {
-        Entity commentEntity = new Entity("Comment");
-        commentEntity.setProperty("username", "JimmyTest");
-        commentEntity.setProperty("comment","Donkey Kong says: Not funny, didn't laugh");
-
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(commentEntity);
-  }
+//         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+//         datastore.put(commentEntity);
+//   }
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
