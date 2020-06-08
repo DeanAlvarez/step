@@ -29,6 +29,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 
@@ -36,16 +37,16 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/comment")
 public class CommentServlet extends HttpServlet {
 
+// FOR TESTING PURPOSES
+//   @Override
+//   public void init() {
+//         Entity commentEntity = new Entity("Comment");
+//         commentEntity.setProperty("username", "JimmyTest");
+//         commentEntity.setProperty("comment","Donkey Kong says: Not funny, didn't laugh");
 
-  @Override
-  public void init() {
-        Entity commentEntity = new Entity("Comment");
-        commentEntity.setProperty("username", "JimmyTest");
-        commentEntity.setProperty("comment","Donkey Kong says: Not funny, didn't laugh");
-
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(commentEntity);
-  }
+//         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+//         datastore.put(commentEntity);
+//   }
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -58,7 +59,7 @@ public class CommentServlet extends HttpServlet {
     ArrayList<Comment> comments = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
       long id = entity.getKey().getId();
-      String username = new String("Jimmy");
+      String username = (String) entity.getProperty("username");
       String commentText = (String) entity.getProperty("comment");
 
       Comment comment = new Comment(id, username, commentText);
@@ -71,8 +72,8 @@ public class CommentServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String name = new String("Tom");
-	String comment= request.getParameter("comment");
+    String name = request.getParameter("name");
+    String comment= request.getParameter("comment");
 
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("username", name);
@@ -80,7 +81,7 @@ public class CommentServlet extends HttpServlet {
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
-    response.sendRedirect("/comments.html");
+    response.sendRedirect("/comments.html");    
   }
 
 

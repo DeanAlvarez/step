@@ -12,15 +12,17 @@
             <li class="navBar"><a href="career.html">Career</a></li>
             <li class="navBar"><a href="research.html">Research</a></li>
             <li class="navBar"><a href="fun.html">Fun</a></li>
-            <li class="navBar"><a href="comment.html" class="active">Comments</a></li>
+            <li class="navBar"><a href="comments.html" class="active">Comments</a></li>
         </ul>
     <div id="content">
     	<h1>Leave a comment</h1>
         <form action="/comment" method="POST">
-      	    <input type="text" name="comment" />
+            <label for="name">Name: </label>
+            <input type="text" name="name"></input><br><br>
+            <textarea rows = "5" cols = "60" name = "comment">Leave your comment here!</textarea>
             <input type="submit"/>
         </form>
-        <div id="server-data"></div>
+        <ul id="server-data" class="comments"></ul>
     </div>
   </body>
 </html>
