@@ -72,23 +72,16 @@ public class CommentServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    HttpSession session = request.getSession(false);
-    if (session != null) {
-        String name = (String) session.getAttribute("username");
-        String comment= request.getParameter("comment");
+    String name = request.getParameter("name");
+    String comment= request.getParameter("comment");
 
-        Entity commentEntity = new Entity("Comment");
-        commentEntity.setProperty("username", name);
-        commentEntity.setProperty("comment", comment);
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("username", name);
+    commentEntity.setProperty("comment", comment);
 
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(commentEntity);
-        response.sendRedirect("/comments.html");
-        
-    } else {
-        response.getWriter().println("you must login before leaving and viewing comments");
-        response.getWriter().println("click <a href=\"login.html\">here</a> to log in");
-    }
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(commentEntity);
+    response.sendRedirect("/comments.html");    
   }
 
 
