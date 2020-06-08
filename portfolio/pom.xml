@@ -33,6 +33,18 @@
         <artifactId>appengine-api-1.0-sdk</artifactId>
         <version>1.9.59</version>
     </dependency>
+    <dependency>
+        <groupId>com.google.cloud</groupId>
+        <artifactId>libraries-bom</artifactId>
+        <version>3.0.0</version>
+        <type>pom</type>
+        <scope>import</scope>
+    </dependency>
+    <dependency>
+        <groupId>com.google.cloud</groupId>
+        <artifactId>google-cloud-datastore</artifactId>
+        <version>1.103.0</version>
+    </dependency>
   </dependencies>
 
   <build>

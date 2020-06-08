@@ -13,8 +13,15 @@ public final class User{
     }
 
     //TODO: Secure hashing. Probably will use JAVA's SHA256 implementation. 
-    private String hash(String input){
-        return input;
+    private static String hash(String input){
+        return Interger.toString(input.hashCode());
+    }
+
+    /**
+    * This class will validate that the given password is the same as the stored hash. It will be used for user validation. 
+    */
+    public static Boolean validate(String password, String hash){
+        return hash(password).equals(hash);
     }
 
 }

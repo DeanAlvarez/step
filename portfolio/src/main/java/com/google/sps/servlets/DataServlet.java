@@ -21,6 +21,7 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.cloud.datastore.StructuredQuery.PropertyFilter; 
 import com.google.sps.data.User;
 import com.google.gson.Gson;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 
@@ -74,16 +76,17 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String name = request.getParameter("name-input");
     String password = request.getParameter("password-input");
+    if(!validate(name,password)){
+        Entity userEntity = new Entity("User");
+        userEntity.setProperty("username", name);
+        userEntity.setProperty("password", password);
+    
 
-    Entity userEntity = new Entity("User");
-    userEntity.setProperty("username", name);
-    userEntity.setProperty("password", password);
-    userEntity.setProperty("userId",0);
-
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(userEntity);
-    // HttpSession session = request.getSession();
-    // session.setAttribute("username", name);
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore.put(userEntity);
+    }
+    HttpSession session = request.getSession();
+    session.setAttribute("username", name);
     response.sendRedirect("/comments.html");
   }
 
@@ -96,5 +99,24 @@ public class DataServlet extends HttpServlet {
     Gson gson = new Gson();
     String json = gson.toJson(map);
     return json;
+  }
+
+
+  private Boolean validate(String username, String password){
+    Query query = Query.newEntityQueryBuilder().setKind("User").setFilter(PropertyFilter.eq("username", username)).build();
+    PreparedQuery results = datastore.prepare(query);
+    Boolean userFound = false;
+    Entity user;
+    for(Entity entity : results.asIterable()){
+        if(((String)entity.getProperty("username")).equals(username)){
+            user = entity;
+            userFound = true;
+            break;
+        }
+    }
+    if(user == null){
+        return false;
+    }
+    return User.validate(password, (String)user.getProperty("password"));
   }
 }
