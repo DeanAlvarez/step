@@ -25,14 +25,11 @@ function getComments() {
 }
 
 
-/** Creates an <li> element containing the users name. */
+/** Creates an <h2> element containing the users name. */
 function createUserElement(comment) {
-  const liElement = document.createElement('li');
-  liElement.className="comments"
   const h2Element = document.createElement('h2');
   h2Element.innerText = comment.username;
-  liElement.appendChild(h2Element);
-  return liElement;
+  return h2Element;
 }
 
 /** Creates a <p> element containing the text of the comment */
