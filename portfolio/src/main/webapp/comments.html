@@ -11,7 +11,12 @@
             <li class="navBar"><a href="index.html">Home</a></li>
             <li class="navBar"><a href="career.html">Career</a></li>
             <li class="navBar"><a href="research.html">Research</a></li>
-            <li class="navBar"><a href="fun.html">Fun</a></li>
+	        <li class="navBar"><div class="dropdown">
+			    <button class="dropbtn">Fun</button>
+			    <div class="dropdown-content" id="dropdown-links">
+			    	<a href="game.html">Game</a>
+				    <a href="meme.html">Meme-Reviewer</a>
+			    </div></div></li>
             <li class="navBar"><a href="comments.html" class="active">Comments</a></li>
         </ul>
     <div id="content">
@@ -22,7 +27,7 @@
             <textarea rows = "5" cols = "60" name = "comment">Leave your comment here!</textarea>
             <input type="submit"/>
         </form>
-        <ul id="server-data" class="comments"></ul>
+        <div id="server-data" class="comments"></div>
     </div>
   </body>
 </html>
