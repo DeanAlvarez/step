@@ -32,13 +32,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * When the user submits the form, Blobstore processes the file upload and then forwards the request
  * to this servlet. This servlet can then process the request using the file URL we get from
  * Blobstore.
  */
-@WebServlet("/my-form-handler")
+@WebServlet("/meme-reviewer")
 public class FormHandlerServlet extends HttpServlet {
 
   @Override
@@ -52,13 +53,10 @@ public class FormHandlerServlet extends HttpServlet {
 
     // Output some HTML that shows the data the user entered.
     // A real codebase would probably store these in Datastore.
-    PrintWriter out = response.getWriter();
-    out.println("<p>Here's the image you uploaded:</p>");
-    out.println("<a href=\"" + imageUrl + "\">");
-    out.println("<img src=\"" + imageUrl + "\" />");
-    out.println("</a>");
-    out.println("<p>Here's the text you entered:</p>");
-    out.println(message);
+    HttpSession session = request.getSession(true);
+    session.setAttribute("message", message);
+    session.setAttribute("imageUrl",imageUrl);
+    response.sendRedirect("/review.html");
   }
 
   /** Returns a URL that points to the uploaded file, or null if the user didn't upload a file. */
