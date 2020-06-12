@@ -16,7 +16,7 @@
 function getMeme() {
   fetch('/meme-reviewer').then(response => response.json()).then((meme) => {
     const dataElement = document.getElementById('server-data');
-    dataElement.innerText = '';
+    dataElement.innerText = 'meme';
     dataElement.appendChild(createImgElement(meme.url));
     dataElement.appendChild(createMessageElement(meme.message));
   });
@@ -33,6 +33,6 @@ function createImgElement(url) {
 /** Creates a <p> element containing the meme message */
 function createMessageElement(message) {
   const pElement = document.createElement('p');
-  pElement.innerText = comment.message;
+  pElement.innerText = message;
   return pElement;
 }
