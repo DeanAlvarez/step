@@ -4,9 +4,9 @@
         <meta charset="UTF-8">
         <title>Dean Alvarez</title>
 	<link rel="stylesheet" href="style.css">
-	<script src="blobstore.js"></script>
+	<script src="memeScript.js"></script>
     </head>
-    <body onload="fetchBlobstoreUrlAndShowForm()">
+    <body onload="getMeme()">
         <ul class="navBar">
             <li class="navBar"><a href="index.html">Home</a></li>
             <li class="navBar"><a href="career.html">Career</a></li>
@@ -19,6 +19,8 @@
 			    </div></div></li>
             <li class="navBar"><a href="comments.html">Comments</a></li>
         </ul>
-
+        <div id="content">
+            <div id="server-data"></div>
+        </div>
     </body>
 </html>
