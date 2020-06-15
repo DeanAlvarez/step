@@ -21,6 +21,16 @@
 
 }
 
+#progressBar{
+    width: 100%;
+    background-color: #ddd;
+}
+#theBarPart{
+    width: 1%;
+    background-color: #0472b3;
+    height: 32px;
+}
+
 body{
     margin:0;
 }
