@@ -11,7 +11,25 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+function start(){
+    startLoadingBar();
+    getMeme();
+}
 
+function startLoadingBar(){
+    var percent = 0;
+    var bar = document.getElementById("theBarPart");
+    var width = 1;
+    var id = setInterval(frame, 100);
+    function frame() {
+        if (width >= 100) {
+            clearInterval(id);
+        } else {
+            width++;
+            bar.style.width = width + "%";
+        }
+    }
+}
 
 function getMeme() {
   fetch('/meme-reviewer').then(response => response.json()).then((meme) => {

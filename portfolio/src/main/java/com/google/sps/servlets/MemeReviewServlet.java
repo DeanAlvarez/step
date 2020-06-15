@@ -71,8 +71,6 @@ public class MemeReviewServlet extends HttpServlet {
         // Get the URL of the image that the user uploaded to Blobstore.
         String imageUrl = getUploadedFileUrl(request, "image");
 
-        // Output some HTML that shows the data the user entered.
-        // A real codebase would probably store these in Datastore.
         HttpSession session = request.getSession(true);
         session.setAttribute("message", message);
         session.setAttribute("imageUrl",imageUrl);
