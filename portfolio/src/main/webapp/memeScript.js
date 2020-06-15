@@ -29,7 +29,7 @@ function startLoadingBar(){
             clearInterval(id);
         } else {
             width++;
-            elem.style.width = width + "%";
+            bar.style.width = width + "%";
         }
     }
 }
