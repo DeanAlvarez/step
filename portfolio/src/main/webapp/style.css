@@ -3,6 +3,7 @@
   margin-right: auto;
   width: 63.212055882%;
   background-color: white;
+  height: 100%;
 }
 
 #greatWave {
@@ -28,11 +29,25 @@
 #theBarPart{
     width: 1%;
     background-color: #0472b3;
-    height: 32px;
+    height: 40px;
+	color: white;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	font-weight: bolder;
 }
 
-body{
+html,body{
     margin:0;
+    height:100%;
+}
+
+#barParent{
+    height:100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .row{
