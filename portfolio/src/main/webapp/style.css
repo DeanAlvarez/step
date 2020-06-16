@@ -29,7 +29,13 @@
 #theBarPart{
     width: 1%;
     background-color: #0472b3;
-    height: 32px;
+    height: 40px;
+	color: white;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	font-weight: bolder;
 }
 
 html,body{

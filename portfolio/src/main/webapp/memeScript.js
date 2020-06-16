@@ -15,9 +15,15 @@
 let arr = ["parsing image for humor", "calculating latent humor residuals", "mapping stochastic eigenvectors", "filtering negative humor space",
 	"optimizing humor function", "applying schroeder-bernstein", "calculating comedy convolutions"];
 
-// Function to randomly shuffle an array/
+// Function to randomly shuffle an array
+// Using the FISHER-YATES SHUFFLE algorithm
 function shuffle(array){
-	//TODO
+	for(let i = array.length - 1; i > 0; i--){
+		let j = Math.floor(Math.random() * (i+1)); //random number j such that 0<j<i
+		let temp = array[i];
+		array[i] = array[j];
+		array[j] = temp;
+	}
 }
 
 function start(){
@@ -25,12 +31,13 @@ function start(){
     memeDiv.style.display = "none";
     getMeme();
     shuffle(arr);
+	console.log(arr);
     startLoadingBar();
 }
 
 function startLoadingBar(){
     var bar = document.getElementById("theBarPart");
-    var width = 1;
+    var width = 5;
     var counter = 0;
     bar.innerText = "Reviewing meme...";
     var id = setInterval(frame, 100);
@@ -54,6 +61,12 @@ function getMeme() {
   fetch('/meme-reviewer').then(response => response.json()).then((meme) => {
     const dataElement = document.getElementById('server-data');
     dataElement.innerText = '';
+	const h1El = document.createElement('h1');
+	h1El.innerText = "This meme is: ";
+	const h2El = document.createElement('h2');
+	h2El.innerText = "NOT FUNNY";
+	dataElement.appendChild(h1El);
+	dataElement.appendChild(h2El);
     dataElement.appendChild(createImgElement(meme.url));
     dataElement.appendChild(createMessageElement(meme.message));
   });
