@@ -45,14 +45,17 @@ public final class FindMeetingQuery {
         else if(optionalAttendees.size() == 0){
             return possibleTimes;
         }
+        //We account for optional attendees by adding the smaller of any overlaps
         ArrayList<TimeRange> overlapingTimes = new ArrayList<>();
-        for(TimeRange t: possibleTimesOptional){
-            for(TimeRange pt: possibleTimes){
-                if(pt.contains(t)){
-                    overlapingTimes.add(t);
+        for(TimeRange optionalTime: possibleTimesOptional){
+            for(TimeRange mandatoryTime: possibleTimes){
+                if(optionalTime.contains(mandatoryTime)){
+                    overlapingTimes.add(mandatoryTime);
+                    //if the optional time is broader than the mandatory we add the mandatory
                 }
-                else if(t.contains(pt)){
-                    overlapingTimes.add(pt);
+                else if(mandatoryTime.contains(optionalTime)){
+                    overlapingTimes.add(optionalTime);
+                    //if the mandatory time is broader than the optional time we add the optional time
                 }
             }
         }
@@ -62,6 +65,8 @@ public final class FindMeetingQuery {
         return possibleTimes;
     }
 
+    //This basic avaliable times algorithm is nLogn. The basic idea is that I run through a sorted
+    //list of the events and build the avaliable times around those. 
     private ArrayList<TimeRange> findAvaliableTimes(Set<TimeRange> timesTaken, int desiredDuration){
         ArrayList<TimeRange> possibleTimes = new ArrayList<>();
         ArrayList<TimeRange> byStart = new ArrayList<>(timesTaken);
@@ -75,6 +80,7 @@ public final class FindMeetingQuery {
             }
             start = nextMeeting.end();
             byStart.remove(0);
+            //Here we are accounting for overlapping meetings
             while(byStart.size() > 0 && byStart.get(0).start() < start ){
                 if(byStart.get(0).end() > start){
                     start = byStart.get(0).end();
@@ -82,6 +88,8 @@ public final class FindMeetingQuery {
                 byStart.remove(0);
             }
         }
+
+        //This accounts for the time period between the last event and the end of the day
         TimeRange potentialTime = TimeRange.fromStartEnd(start,TimeRange.END_OF_DAY,true);
         if(!overlap(potentialTime,timesTaken) && potentialTime.duration() > desiredDuration){
             possibleTimes.add(potentialTime);
