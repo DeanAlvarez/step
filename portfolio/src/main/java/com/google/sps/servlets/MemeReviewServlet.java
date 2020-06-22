@@ -53,8 +53,11 @@ public class MemeReviewServlet extends HttpServlet {
         else{
             String message = (String) session.getAttribute("message");
             String imageUrl = (String) session.getAttribute("imageUrl");
-            Meme meme = new Meme(message,imageUrl);
+	    log(message);
+	    log(imageUrl);
+            Meme meme = new Meme(imageUrl,message);
             String json = convertToJsonUsingGson(meme);
+	    log(json);
             response.getWriter().println(json);
         }
     }
@@ -71,6 +74,8 @@ public class MemeReviewServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
         session.setAttribute("message", message);
         session.setAttribute("imageUrl",imageUrl);
+	log("message: " + message);
+	log("image URL: " + imageUrl);
         response.sendRedirect("/review.html");
     }
 
